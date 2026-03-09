@@ -22,7 +22,7 @@ export default function App() {
 
 const fetchEvents = () => {
 
-  return fetch("https://mydevent-api-vu.fly.dev/me/events", {
+  return fetch("${import.meta.env.VITE_API_URL}/me/events", {
     headers: {
       Authorization: "Bearer " + localStorage.getItem("token")
     }
