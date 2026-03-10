@@ -202,7 +202,7 @@ export default function EventCard({ event, onRefresh, listView }) {
           e.stopPropagation()
           toggleFavorite()
         }}
-      className="p-2 -top-1 cursor-pointer"
+      className="px-1 pb-2 pt-0 cursor-pointer"
       >
         {(event.status === "INTERESSERT" || event.status === "PÅMELDT") ? (
           <StarSolid className="w-6 h-6 text-yellow-400 hover:scale-120 active:scale-125 transition transform duration-200"/>
@@ -218,7 +218,7 @@ export default function EventCard({ event, onRefresh, listView }) {
           e.stopPropagation()
           toggleFavorite()
         }}
-      className="p-2 cursor-pointer"
+      className="px-1 pb-2 pt-0  cursor-pointer"
       >
         {event.calendar_event_id ? (
           <BellSolid className="w-6 h-6 text-blue-500 hover:scale-120 active:scale-125 transition transform duration-200" />
