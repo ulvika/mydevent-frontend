@@ -22,10 +22,16 @@ export default function App() {
 
 const fetchEvents = () => {
 
+  const token = localStorage.getItem("token")
+
+  const headers = {}
+
+  if (token) {
+    headers.Authorization = "Bearer " + token
+  }
+
   return fetch(`${import.meta.env.VITE_API_URL}/me/events`, {
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("token")
-    }
+    headers
   })
     .then(res => {
       if (res.status === 401) {
