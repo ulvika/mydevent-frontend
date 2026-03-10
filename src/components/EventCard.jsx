@@ -216,7 +216,7 @@ export default function EventCard({ event, onRefresh, listView }) {
       <button
         onClick={(e) => {
           e.stopPropagation()
-          toggleFavorite()
+          toggleNotification()
         }}
       className="px-1 pb-2 pt-0  cursor-pointer"
       >
