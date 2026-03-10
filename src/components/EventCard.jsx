@@ -149,8 +149,11 @@ export default function EventCard({ event, onRefresh, listView }) {
   const handlePameldt = async () => {
     await fetch(`https://api.mydevent.app/events/${event.id}/pameldt`, {
       method: "POST",
-      credentials: "include"
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      }
     })
+    
     await onRefresh();
   }
   
