@@ -191,30 +191,38 @@ export default function EventCard({ event, onRefresh, listView }) {
     >
     <ArrowTopRightOnSquareIcon className="w-6 h-6" />
     </a>
+
+
       {/* Favorite */}
-      <div
-        onClick={toggleFavorite}
-        className="cursor-pointer"
+      <button
+        onClick={(e) => {
+          e.stopPropagation()
+          toggleFavorite()
+        }}
+      className="p-2 cursor-pointer"
       >
         {(event.status === "INTERESSERT" || event.status === "PÅMELDT") ? (
           <StarSolid className="w-6 h-6 text-yellow-400 hover:scale-120 active:scale-125 transition transform duration-200"/>
         ) : (
           <StarOutline className="w-6 h-6 text-gray-400 hover:scale-120 active:scale-125 transition transform duration-150" />
         )}
-      </div>
+      </button>
 
       {/* Notification */}
       {(event.status === "INTERESSERT" || event.status === "PÅMELDT") && (
-      <div
-        onClick={toggleNotification}
-        className="cursor-pointer"
+      <button
+        onClick={(e) => {
+          e.stopPropagation()
+          toggleFavorite()
+        }}
+      className="p-2 cursor-pointer"
       >
         {event.calendar_event_id ? (
           <BellSolid className="w-6 h-6 text-blue-500 hover:scale-120 active:scale-125 transition transform duration-200" />
         ) : (
           <BellOutline className="w-6 h-6 text-gray-400 hover:scale-120 active:scale-125 transition transform duration-150" />
         )}
-      </div>
+      </button>
     )}
 </div>
       {/* Availability ring */}
