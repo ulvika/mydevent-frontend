@@ -119,9 +119,11 @@ export default function EventCard({ event, onRefresh, listView }) {
         : "/events/" + event.id + "/interested";
 
     const method =
-      (event.status === "INTERESSERT" ||  event.status === "PÅMELDT") ? "DELETE" : "POST";
+      (event.status === "INTERESSERT" ||  event.status === "PÅMELDT") 
+      ? "DELETE" 
+      : "POST";
 
-    await fetch(`https://mydevent-api-vu.fly.dev${url}`, {
+    await fetch(`https://api.mydevent.app${url}`, {
       method,
       credentials: "include"
     });
@@ -133,7 +135,7 @@ export default function EventCard({ event, onRefresh, listView }) {
   const method = event.calendar_event_id ? "DELETE" : "POST"
 
   await fetch(
-    `https://mydevent-api-vu.fly.dev/events/${event.id}/notification`,
+    `https://api.mydevent.app/events/${event.id}/notification`,
     {
       method,
       credentials: "include"
@@ -144,7 +146,7 @@ export default function EventCard({ event, onRefresh, listView }) {
 }
 
   const handlePameldt = async () => {
-    await fetch(`https://mydevent-api-vu.fly.dev/events/${event.id}/pameldt`, {
+    await fetch(`https://api.mydevent.app/events/${event.id}/pameldt`, {
       method: "POST",
       credentials: "include"
     })
