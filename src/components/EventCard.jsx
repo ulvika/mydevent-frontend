@@ -124,9 +124,11 @@ export default function EventCard({ event, onRefresh, listView }) {
       : "POST";
 
     await fetch(`https://api.mydevent.app${url}`, {
-      method,
-      credentials: "include"
-    });
+    method,
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("token")
+    }
+  })
 
     await onRefresh();   
   }
@@ -134,13 +136,12 @@ export default function EventCard({ event, onRefresh, listView }) {
   async function toggleNotification() {
   const method = event.calendar_event_id ? "DELETE" : "POST"
 
-  await fetch(
-    `https://api.mydevent.app/events/${event.id}/notification`,
-    {
-      method,
-      credentials: "include"
-    }
-  )
+  await fetch(`https://api.mydevent.app/events/${event.id}/notification`, {
+  method: "POST",
+  headers: {
+    Authorization: "Bearer " + localStorage.getItem("token")
+  }
+})
 
   await onRefresh()
 }
