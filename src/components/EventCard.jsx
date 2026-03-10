@@ -202,7 +202,7 @@ export default function EventCard({ event, onRefresh, listView }) {
           e.stopPropagation()
           toggleFavorite()
         }}
-      className="p-2 cursor-pointer"
+      className="p-2 -top-1 cursor-pointer"
       >
         {(event.status === "INTERESSERT" || event.status === "PÅMELDT") ? (
           <StarSolid className="w-6 h-6 text-yellow-400 hover:scale-120 active:scale-125 transition transform duration-200"/>
