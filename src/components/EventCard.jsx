@@ -262,7 +262,7 @@ export default function EventCard({ event, onRefresh, listView }) {
 
     {/* Availability ring */}
 
-        {saleOpen && event.restrictions > 0 && (
+        {saleOpen && hasRestrictions > 0 && (
         <AvailabilityRing className={ringStyle} percent={remaining} />
       )}
 
@@ -307,7 +307,7 @@ export default function EventCard({ event, onRefresh, listView }) {
       )}
 
       {/* Action Buttons */}
-      {event.status === "INTERESSERT" && saleOpen && (
+      {event.status === "INTERESSERT" && saleState === "OPEN" && (
       <div className="pt-2">
         <button
           onClick={handlePameldt}
