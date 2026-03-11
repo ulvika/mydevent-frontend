@@ -33,6 +33,12 @@ export default function EventCard({ event, onRefresh, listView }) {
   const hasRestrictions = event.restrictions > 0
 
   let saleState = "FUTURE"
+
+  if (sellDate <= now) {
+    saleState = "OPEN"
+  } else if (diffDays <= 5) {
+    saleState = "SOON"
+  }
   const saleOpen = saleState === "OPEN"
   const soldOut = saleOpen && hasRestrictions && remaining === 0
 
@@ -48,11 +54,7 @@ export default function EventCard({ event, onRefresh, listView }) {
 
   let progressColor = "text-green-600"
 
-  if (sellDate <= now) {
-    saleState = "OPEN"
-  } else if (diffDays <= 5) {
-    saleState = "SOON"
-  }
+  
 
   const stripeColor =
   event.busy
@@ -307,7 +309,7 @@ export default function EventCard({ event, onRefresh, listView }) {
       )}
 
       {/* Action Buttons */}
-      {event.status === "INTERESSERT" && saleState === "OPEN" && (
+      {event.status === "INTERESSERT" && saleOpen && (
       <div className="pt-2">
         <button
           onClick={handlePameldt}
