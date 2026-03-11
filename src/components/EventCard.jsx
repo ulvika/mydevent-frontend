@@ -232,10 +232,7 @@ export default function EventCard({ event, onRefresh, listView }) {
       )}
       </div>
 
-      {/* Availability ring */}
-      <div className="absolute bottom-1 right-1 flex gap-2">
-        <AvailabilityRing className="w-8 h-8" percent={20} />
-      </div>
+      
 
     </div>
 
@@ -251,7 +248,10 @@ export default function EventCard({ event, onRefresh, listView }) {
       {event.club}
     </p>
 
- 
+      {/* Availability ring */}
+      <div className="absolute bottom-1 right-1 flex gap-2">
+        <AvailabilityRing className="w-8 h-8" percent={20} />
+      </div>
 
     {saleOpen && hasRestrictions && !soldOut && (
     <p className={`text-sm ${progressColor}`}>
