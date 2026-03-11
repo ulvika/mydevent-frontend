@@ -257,7 +257,7 @@ export default function EventCard({ event, onRefresh, listView }) {
     )}
 
     {/* Availability ring */}
-        <AvailabilityRing className="absolute bottom-3 right-2 flex w-20 h-20" percent={20} />
+        <AvailabilityRing className="absolute bottom-3 right-2 flex w-20 h-20" percent={remaining} />
 
     {saleOpen && hasRestrictions && soldOut && (
       <p className="text-red-600 font-semibold">

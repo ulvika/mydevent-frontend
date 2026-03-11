@@ -13,11 +13,8 @@ export default function AvailabilityRing({ percent = 0, className }) {
   else if (remaining <= 30) color = "#f59e0b"
 
   return (
-    <svg
-      viewBox="0 0 28 28"
-      className={className}
-      preserveAspectRatio="xMidYMid meet"
-    >
+    <svg viewBox="0 0 28 28" className={className}>
+      {/* background ring */}
       <circle
         stroke="#e5e7eb"
         fill="transparent"
@@ -27,6 +24,7 @@ export default function AvailabilityRing({ percent = 0, className }) {
         cy="14"
       />
 
+      {/* progress ring */}
       <circle
         stroke={color}
         fill="transparent"
@@ -39,6 +37,19 @@ export default function AvailabilityRing({ percent = 0, className }) {
         cy="14"
         transform="rotate(-90 14 14)"
       />
+
+      {/* percentage text */}
+      <text
+        x="14"
+        y="14"
+        textAnchor="middle"
+        dominantBaseline="middle"
+        fontSize="7"
+        fontWeight="600"
+        fill={color}
+      >
+        {remaining}%
+      </text>
     </svg>
   )
 }
