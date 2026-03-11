@@ -234,7 +234,7 @@ export default function EventCard({ event, onRefresh, listView }) {
 
       {/* Availability ring */}
    
-        <AvailabilityRing percent=20 />
+        <AvailabilityRing className="w-8 h-8" percent={20} />
 
 
     </div>
