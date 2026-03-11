@@ -174,7 +174,7 @@ export default function EventCard({ event, onRefresh, listView }) {
         <TrophyIcon className="w-5 h-5 text-yellow-500 flex-shrink-0" />
       )}
 
-      <h2 className="font-semibold text-lg truncate">
+      <h2 className="pt-2 font-semibold text-lg truncate">
         {event.name}
         {event.isNew && (
         <span className="ml-2 px-2 py-0.5 text-xs rounded bg-green-100 text-green-700">
