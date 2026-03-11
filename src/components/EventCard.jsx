@@ -167,17 +167,17 @@ export default function EventCard({ event, onRefresh, listView }) {
 
       {event.busy ? (
         <div className="relative flex-shrink-0">
-          <CalendarDaysIcon className="w-5 h-5 text-gray-500" />
-          <NoSymbolIcon className="w-3 h-3 text-red-500 absolute -top-1 -right-1" />
+          <CalendarDaysIcon className="w-5 h-5 mt-2  text-gray-500" />
+          <NoSymbolIcon className="w-3 h-3 mt-2 text-red-500 absolute -top-1 -right-1" />
         </div>
       ) : (
-        <TrophyIcon className="w-5 h-5 pt-2 text-yellow-500 flex-shrink-0" />
+        <TrophyIcon className="w-5 h-5 mt-2 text-yellow-500 flex-shrink-0" />
       )}
 
-      <h2 className="pt-2 font-semibold text-lg truncate">
+      <h2 className="mt-2 font-semibold text-lg truncate">
         {event.name}
         {event.isNew && (
-        <span className="ml-2 px-2 py-0.5 pt-2 text-xs rounded bg-green-100 text-green-700">
+        <span className="ml-2 px-2 py-0.5 mt-2 text-xs rounded bg-green-100 text-green-700">
           NYTT
         </span>
       )}
