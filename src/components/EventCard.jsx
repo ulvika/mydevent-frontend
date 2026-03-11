@@ -248,7 +248,10 @@ export default function EventCard({ event, onRefresh, listView }) {
 
     { listView && (
       <div className="m-0 p-0">
-
+      {/* Availability ring */}
+        {saleOpen && hasRestrictions > 0 && (
+        <AvailabilityRing className={ringStyle} percent={remaining} />
+      )}
 
     <p className="text-sm text-gray-500">
       {event.club}
@@ -262,11 +265,7 @@ export default function EventCard({ event, onRefresh, listView }) {
       </p>
     )}
 
-    {/* Availability ring */}
-
-        {saleOpen && hasRestrictions > 0 && (
-        <AvailabilityRing className={ringStyle} percent={remaining} />
-      )}
+    
 
     {saleOpen && hasRestrictions && soldOut && (
       <p className="text-red-600 font-semibold">
