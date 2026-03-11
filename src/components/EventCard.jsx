@@ -171,7 +171,7 @@ export default function EventCard({ event, onRefresh, listView }) {
           <NoSymbolIcon className="w-3 h-3 mt-2 text-red-500 absolute -top-1 -right-1" />
         </div>
       ) : (
-        <TrophyIcon className="w-5 h-5 mt-2 text-yellow-500 flex-shrink-0" />
+        <TrophyIcon className="w-7 h-7 mt-2 text-yellow-500 flex-shrink-0" />
       )}
 
       <h2 className="mt-2 font-semibold text-lg truncate">
