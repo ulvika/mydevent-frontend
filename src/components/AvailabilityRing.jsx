@@ -44,7 +44,7 @@ export default function AvailabilityRing({ percent = 0, className }) {
         y="14"
         textAnchor="middle"
         dominantBaseline="middle"
-        fontSize="7"
+        fontSize="5"
         fontWeight="600"
         fill={color}
       >

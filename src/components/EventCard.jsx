@@ -40,6 +40,10 @@ export default function EventCard({ event, onRefresh, listView }) {
 
   const opacity = event.busy ? "opacity-80" : ""
 
+  const ringStyle = event.status === "INTERESSERT"  && saleOpen
+    ? "absolute bottom-8 right-2 flex w-20 h-20" 
+    : "absolute bottom-3 right-2 flex w-20 h-20"
+
   
 
   let progressColor = "text-green-600"
@@ -257,7 +261,10 @@ export default function EventCard({ event, onRefresh, listView }) {
     )}
 
     {/* Availability ring */}
-        <AvailabilityRing className="absolute bottom-3 right-2 flex w-20 h-20" percent={remaining} />
+
+        {saleOpen && event.restrictions > 0 && (
+        <AvailabilityRing className={ringStyle} percent={remaining} />
+      )}
 
     {saleOpen && hasRestrictions && soldOut && (
       <p className="text-red-600 font-semibold">
@@ -300,7 +307,7 @@ export default function EventCard({ event, onRefresh, listView }) {
       )}
 
       {/* Action Buttons */}
-      {event.status === "INTERESSERT" && (
+      {event.status === "INTERESSERT" && saleOpen && (
       <div className="pt-2">
         <button
           onClick={handlePameldt}
