@@ -189,14 +189,14 @@ export default function EventCard({ event, onRefresh, listView }) {
       <div className="absolute -top-1 right-1 flex items-center gap-3">
       <div className="absolute -top-1 right-1 flex gap-2">
 
-    <a
-      href={`https://ag.devent.no/public/event/${event.id}`}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="text-gray-500"
-    >
-    <ArrowTopRightOnSquareIcon className="w-6 h-6" />
-    </a>
+      <a
+        href={`https://ag.devent.no/public/event/${event.id}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-gray-500"
+      >
+      <ArrowTopRightOnSquareIcon className="w-6 h-6" />
+      </a>
 
 
       {/* Favorite */}
@@ -229,8 +229,8 @@ export default function EventCard({ event, onRefresh, listView }) {
           <BellOutline className="w-6 h-6 text-gray-400 hover:scale-120 active:scale-125 transition transform duration-150" />
         )}
       </button>
-    )}
-</div>
+      )}
+      </div>
 
       {/* Availability ring */}
    

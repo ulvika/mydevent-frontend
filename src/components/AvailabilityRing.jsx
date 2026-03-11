@@ -1,4 +1,4 @@
-export default function AvailabilityRing({ percent }) {
+export default function AvailabilityRing({ percent, className }) {
   const radius = 14
   const stroke = 3
 
@@ -8,13 +8,13 @@ export default function AvailabilityRing({ percent }) {
   const remaining = Math.max(0, percent)
   const progress = circumference - (remaining / 100) * circumference
 
-  let color = "#16a34a"   // green
+  let color = "#16a34a"
 
   if (remaining <= 10) color = "#dc2626"
   else if (remaining <= 30) color = "#f59e0b"
 
   return (
-    <svg height={radius * 2} width={radius * 2}>
+    <svg className={className} viewBox="0 0 28 28">
       <circle
         stroke="#e5e7eb"
         fill="transparent"
