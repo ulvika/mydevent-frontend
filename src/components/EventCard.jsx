@@ -231,10 +231,11 @@ export default function EventCard({ event, onRefresh, listView }) {
       </button>
     )}
 </div>
+
       {/* Availability ring */}
-      {saleOpen && event.restrictions > 0 && (
-        <AvailabilityRing percent={remaining} />
-      )}
+   
+        <AvailabilityRing percent=20 />
+
 
     </div>
 
