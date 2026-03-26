@@ -10,6 +10,8 @@ import {
   Squares2X2Icon
 } from "@heroicons/react/24/outline"
 
+const APP_VERSION = "1.0.0"
+
 export default function App() {
 
   const [events, setEvents] = useState([])
@@ -20,51 +22,61 @@ export default function App() {
   const [pullStart, setPullStart] = useState(null)
   const [pullDistance, setPullDistance] = useState(0)
 
-const fetchEvents = () => {
+const fetchEvents = async () => {
+  setLoading(true)
 
-  const token = localStorage.getItem("token")
+  try {
+    const token = localStorage.getItem("token")
 
-  const headers = {}
-
-  if (token) {
-    headers.Authorization = "Bearer " + token
-  }
-
-  return fetch(`${import.meta.env.VITE_API_URL}/me/events`, {
-    headers
-  })
-    .then(res => {
-      if (res.status === 401) {
-        setUnauthorized(true)
-        return null
-      }
-      return res.json()
-    })
-    .then(data => {
-
-      if (!data) return
-
-      const cached = JSON.parse(localStorage.getItem("eventsCache") || "[]")
-
-      const cachedIds = new Set(cached.map(e => e.id))
-
-      const eventsWithFlag = data.events.map(e => ({
-        ...e,
-        isNew: !cachedIds.has(e.id)
-      }))
-
-      setEvents(eventsWithFlag)
-
-      localStorage.setItem("eventsCache", JSON.stringify(data.events))
-      localStorage.setItem("eventsCacheTime", Date.now())
-
-      setLoading(false) 
-
-    }).catch(err => {
-      console.error("Fetch error:", err)
-      setLoading(false) })
+    if (!token) {
+      setUnauthorized(true)
+      return
     }
 
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/me/events`, {
+      headers: {
+        Authorization: "Bearer " + token
+      }
+    })
+
+    if (res.status === 401) {
+      localStorage.removeItem("token")
+      localStorage.removeItem("eventsCache")
+      localStorage.removeItem("eventsCacheTime")
+
+      setUnauthorized(true)
+      return
+    }
+
+    const data = await res.json()
+
+    if (!data?.events) return
+
+    let cached = []
+    try {
+      cached = JSON.parse(localStorage.getItem("eventsCache") || "[]")
+    } catch {
+      localStorage.removeItem("eventsCache")
+    }
+
+    const cachedIds = new Set(cached.map(e => e.id))
+
+    const eventsWithFlag = data.events.map(e => ({
+      ...e,
+      isNew: !cachedIds.has(e.id)
+    }))
+
+    setEvents(eventsWithFlag)
+
+    localStorage.setItem("eventsCache", JSON.stringify(data.events))
+    localStorage.setItem("eventsCacheTime", Date.now())
+
+  } catch (err) {
+    console.error("Fetch error:", err)
+  } finally {
+    setLoading(false)   // ✅ ALWAYS runs
+  }
+}
 
 
 
@@ -73,28 +85,38 @@ const fetchEvents = () => {
   const params = new URLSearchParams(window.location.search)
   const token = params.get("token")
 
-  // Save token from login redirect
   if (token) {
     localStorage.setItem("token", token)
-
-    // remove token from URL for security
     window.history.replaceState({}, document.title, window.location.pathname)
+  }
+
+  // 🔥 VERSION CHECK
+  const storedVersion = localStorage.getItem("appVersion")
+
+  if (storedVersion !== APP_VERSION) {
+    console.log("App version changed → clearing cache")
+
+    localStorage.removeItem("eventsCache")
+    localStorage.removeItem("eventsCacheTime")
+    localStorage.setItem("appVersion", APP_VERSION)
   }
 
   const cached = localStorage.getItem("eventsCache")
   const cacheTime = Number(localStorage.getItem("eventsCacheTime"))
 
   if (cached && cacheTime && Date.now() - cacheTime < 3600000) {
-    setEvents(JSON.parse(cached))
-    setLoading(false)
-
-    fetchEvents()
-
+    try {
+      setEvents(JSON.parse(cached))
+      setLoading(false)
+      fetchEvents() // silent refresh
+    } catch {
+      localStorage.removeItem("eventsCache")
+      setLoading(true)
+      fetchEvents()
+    }
   } else {
-
     setLoading(true)
     fetchEvents()
-
   }
 
 }, [])
