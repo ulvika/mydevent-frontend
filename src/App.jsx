@@ -30,6 +30,7 @@ const fetchEvents = async () => {
 
     if (!token) {
       setUnauthorized(true)
+      setLoading(false) 
       return
     }
 
@@ -45,6 +46,8 @@ const fetchEvents = async () => {
       localStorage.removeItem("eventsCacheTime")
 
       setUnauthorized(true)
+      setEvents([])       // 🔥 clear UI immediately
+      setLoading(false)   // 🔥 prevent ghost UI
       return
     }
 
@@ -104,7 +107,7 @@ const fetchEvents = async () => {
   const cached = localStorage.getItem("eventsCache")
   const cacheTime = Number(localStorage.getItem("eventsCacheTime"))
 
-  if (cached && cacheTime && Date.now() - cacheTime < 3600000) {
+  if (token && cached && cacheTime && Date.now() - cacheTime < 3600000) {
     try {
       setEvents(JSON.parse(cached))
       setLoading(false)
