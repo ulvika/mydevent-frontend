@@ -353,7 +353,7 @@ export default function EventCard({ event, onRefresh, listView }) {
       <div className="pt-2">
         <button
           onClick={handlePameldt}
-          className="mt-2 w-full bg-gray-600 text-blue-500 py-3 rounded-xl font-medium"
+          className="mt-2 w-full bg-gray-200 text-blue-500 py-3 rounded-xl font-medium"
         >
           OVERNATTING?
         </button>
