@@ -46,7 +46,7 @@ export default function EventCard({ event, onRefresh, listView }) {
 
   const opacity = event.busy ? "opacity-80" : ""
 
-  const ringStyle = event.status === "INTERESSERT"  && saleOpen
+  const ringStyle = (event.status === "INTERESSERT" || event.status === "PÅMELDT")  && saleOpen
     ? "absolute bottom-18 right-2 flex w-20 h-20" 
     : "absolute bottom-3 right-2 flex w-20 h-20"
 
