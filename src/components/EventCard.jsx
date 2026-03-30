@@ -120,12 +120,12 @@ export default function EventCard({ event, onRefresh, listView }) {
 
   async function toggleFavorite() {
     const url =
-      (event.status === "INTERESSERT" ||  event.status === "PÅMELDT")
+      (event.status === "INTERESSERT" ||  event.status === "PÅMELDT" ||  event.status === "BOOKED")
         ? "/events/" + event.id + "/interested"
         : "/events/" + event.id + "/interested";
 
     const method =
-      (event.status === "INTERESSERT" ||  event.status === "PÅMELDT") 
+      (event.status === "INTERESSERT" ||  event.status === "PÅMELDT" ||  event.status === "BOOKED") 
       ? "DELETE" 
       : "POST";
 
@@ -226,7 +226,7 @@ export default function EventCard({ event, onRefresh, listView }) {
         }}
       className="px-1 pb-2 pt-0 cursor-pointer"
       >
-        {(event.status === "INTERESSERT" || event.status === "PÅMELDT") ? (
+        {(event.status === "INTERESSERT" || event.status === "PÅMELDT" ||  event.status === "BOOKED") ? (
           <StarSolid className="w-6 h-6 text-yellow-400 hover:scale-120 active:scale-125 transition transform duration-200"/>
         ) : (
           <StarOutline className="w-6 h-6 text-gray-400 hover:scale-120 active:scale-125 transition transform duration-150" />
@@ -234,7 +234,7 @@ export default function EventCard({ event, onRefresh, listView }) {
       </button>
 
       {/* Notification */}
-      {(event.status === "INTERESSERT" || event.status === "PÅMELDT") && (
+      {(event.status === "INTERESSERT" || event.status === "PÅMELDT" ||  event.status === "BOOKED") && (
       <button
         onClick={(e) => {
           e.stopPropagation()
