@@ -162,6 +162,37 @@ export default function EventCard({ event, onRefresh, listView }) {
 
     await onRefresh();
   }
+
+  const handleBookAccommodation = async () => {
+  try {
+    const token = localStorage.getItem("token")
+
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL}/events/${event.id}/status`,
+      {
+        method: "PATCH", // or PUT depending on your API
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token
+        },
+        body: JSON.stringify({
+          status: "BOOKED"
+        })
+      }
+    )
+
+    if (!res.ok) {
+      console.error("Failed to update status")
+      return
+    }
+
+    // 🔄 refresh list
+    onRefresh()
+
+  } catch (err) {
+    console.error("Update error:", err)
+  }
+}
   
 
   return (
@@ -301,21 +332,32 @@ export default function EventCard({ event, onRefresh, listView }) {
       </div>
     )}
 
+
+    {event.status === "BOOKED" && (
+      <div className="pt-2">
+        <span className="inline-block px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800">
+          PÅMELDT
+        </span>
+        <span className="inline-block px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800">
+          OVERNATTING BESTILT
+        </span>
+      )}
+    {/* Action Buttons */}
     {event.status === "PÅMELDT" && (
+       <div className="pt-2">
         <span className="inline-block px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800">
           PÅMELDT
         </span>
         <div className="pt-2">
         <button
           onClick={handlePameldt}
-          className="mt-2 w-full bg-gray-600 text-blue py-3 rounded-xl font-medium"
-        >
+          className="mt-2 w-full bg-gray-600 text-blue py-3 rounded-xl font-medium">
           OVERNATTING?
         </button>
       </div>
       )}
 
-      {/* Action Buttons */}
+      
       {event.status === "INTERESSERT" && saleOpen && (
       <div className="pt-2">
         <button
