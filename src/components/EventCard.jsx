@@ -345,18 +345,21 @@ export default function EventCard({ event, onRefresh, listView }) {
       )}
     {/* Action Buttons */}
     {event.status === "PÅMELDT" && (
-       <div className="pt-2">
-        <span className="inline-block px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800">
-          PÅMELDT
-        </span>
-        <div className="pt-2">
+    <div className="pt-2">
+      <span className="inline-block px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800">
+        PÅMELDT
+      </span>
+
+      <div className="pt-2">
         <button
           onClick={handlePameldt}
-          className="mt-2 w-full bg-gray-600 text-blue py-3 rounded-xl font-medium">
+          className="mt-2 w-full bg-gray-600 text-blue-500 py-3 rounded-xl font-medium"
+        >
           OVERNATTING?
         </button>
       </div>
-      )}
+    </div>   // ✅ properly closed
+  )}
 
       
       {event.status === "INTERESSERT" && saleOpen && (
