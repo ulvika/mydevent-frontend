@@ -163,36 +163,18 @@ export default function EventCard({ event, onRefresh, listView }) {
     await onRefresh();
   }
 
-  const handleBookAccommodation = async () => {
-  try {
-    const token = localStorage.getItem("token")
-
-    const res = await fetch(
-      `${import.meta.env.VITE_API_URL}/events/${event.id}/status`,
-      {
-        method: "PATCH", // or PUT depending on your API
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + token
-        },
-        body: JSON.stringify({
-          status: "BOOKED"
-        })
+  const handleBooked = async () => {
+    await fetch(`https://api.mydevent.app/events/${event.id}/booked`, {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
       }
-    )
+    })
 
-    if (!res.ok) {
-      console.error("Failed to update status")
-      return
-    }
-
-    // 🔄 refresh list
-    onRefresh()
-
-  } catch (err) {
-    console.error("Update error:", err)
+    await onRefresh();
   }
-}
+
+  
   
 
   return (
@@ -352,9 +334,8 @@ export default function EventCard({ event, onRefresh, listView }) {
 
       <div className="pt-2">
         <button
-          onClick={handlePameldt}
-          className="mt-2 w-full bg-gray-200 text-blue-500 py-3 rounded-xl font-medium"
-        >
+          onClick={handleBooked}
+          className="mt-2 w-full bg-gray-200 text-blue-500 py-3 rounded-xl font-medium">
           OVERNATTING?
         </button>
       </div>
