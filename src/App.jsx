@@ -90,7 +90,9 @@ const fetchEvents = async () => {
 
   if (token) {
     localStorage.setItem("token", token)
-    window.history.replaceState({}, document.title, window.location.pathname)
+    
+    window.location.replace(window.location.pathname)
+    return
   }
 
   // 🔥 VERSION CHECK
