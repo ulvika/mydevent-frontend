@@ -10,7 +10,8 @@ import {
   Squares2X2Icon
 } from "@heroicons/react/24/outline"
 
-const APP_VERSION = "1.0.0"
+const APP_VERSION = "1.0.1"
+const DEBUG = false
 
 export default function App() {
 
@@ -167,7 +168,7 @@ const handleTouchEnd = async () => {
   setPullStart(null)
   setPullDistance(0)
 }
-{/*
+
   const handleLogout = () => {
   localStorage.removeItem("token")
   localStorage.removeItem("eventsCache")
@@ -180,7 +181,7 @@ const breakToken = () => {
   localStorage.setItem("token", "invalid")
   window.location.reload()
 }
-*/}
+
 
 
 
@@ -249,19 +250,17 @@ if (loading) {
         </h1>
         </div>
         <div className="space-x-10 flex-col">
-          {/*
-          <button
-          onClick={breakToken}
-          className="p-2 rounded-lg text-sm"
-        >
-          Br
-        </button>
-        <button
-          onClick={handleLogout}
-          className="p-2 rounded-lg text-sm"
-        >
-          Out
-        </button>*/}
+         
+         {DEBUG && (
+          <button onClick={breakToken}>
+            Break
+          </button>
+        )}
+         {DEBUG && (
+          <button onClick={handleLogout}>
+            Logout
+          </button>
+        )}
           <button
           onClick={() => setListView(!listView)}
           className="p-2 rounded-lg"
