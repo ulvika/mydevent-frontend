@@ -10,8 +10,9 @@ import {
   Squares2X2Icon
 } from "@heroicons/react/24/outline"
 
-const APP_VERSION = "1.0.1"
-const DEBUG = false
+const APP_VERSION = "1.0.2"
+
+
 
 export default function App() {
 
@@ -22,6 +23,8 @@ export default function App() {
   const [listView, setListView] = useState(true)
   const [pullStart, setPullStart] = useState(null)
   const [pullDistance, setPullDistance] = useState(0)
+  const [debugMode, setDebugMode] = useState(false)
+  const [tapCount, setTapCount] = useState(0) 
 
   async function getTokenWithRetry(retries = 5) {
   for (let i = 0; i < retries; i++) {
@@ -94,6 +97,16 @@ const fetchEvents = async () => {
     setLoading(false)   // ✅ ALWAYS runs
   }
 }
+
+useEffect(() => {
+  if (tapCount === 0) return
+
+  const timer = setTimeout(() => {
+    setTapCount(0)
+  }, 1500) // 1.5 seconds window
+
+  return () => clearTimeout(timer)
+}, [tapCount])
 
 
 
@@ -182,6 +195,20 @@ const breakToken = () => {
   window.location.reload()
 }
 
+const handleLogoTap = () => {
+  setTapCount(prev => {
+    const next = prev + 1
+
+    if (next >= 5) {
+      setDebugMode(true)
+      console.log("DEBUG MODE ENABLED")
+      return 0
+    }
+
+    return next
+  })
+}
+
 
 
 
@@ -244,23 +271,24 @@ if (loading) {
               src="/icons/mydevent-192.png"
               alt="MyDevent"
               className="w-12 h-12"
+              onClick={handleLogoTap}
             />
         <h1 className="text-xl font-semibold">
           My Devent
         </h1>
         </div>
         <div className="space-x-10 flex-col">
-         
-         {DEBUG && (
-          <button onClick={breakToken}>
-            Break
-          </button>
-        )}
-         {DEBUG && (
-          <button onClick={handleLogout}>
-            Logout
-          </button>
-        )}
+          {debugMode && (
+            <div className="space-y-2">
+              <button onClick={handleLogout}>
+                Logout
+              </button>
+
+              <button onClick={breakToken}>
+                Break token
+              </button>
+            </div>
+          )}
           <button
           onClick={() => setListView(!listView)}
           className="p-2 rounded-lg"
