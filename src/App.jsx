@@ -216,6 +216,10 @@ const handleLogoTap = () => {
   })
 }
 
+const disableDebug = () => {
+  setDebugMode(false)
+}
+
 
 
 
@@ -293,6 +297,10 @@ if (loading) {
 
               <button onClick={breakToken}>
                 Break token
+              </button>
+
+              <button onClick={disableDebug}>
+                Disable debug
               </button>
             </div>
           )}
