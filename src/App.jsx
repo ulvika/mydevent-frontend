@@ -167,8 +167,8 @@ const handleTouchEnd = async () => {
   setPullStart(null)
   setPullDistance(0)
 }
-
-const handleLogout = () => {
+{/*
+  const handleLogout = () => {
   localStorage.removeItem("token")
   localStorage.removeItem("eventsCache")
   localStorage.removeItem("eventsCacheTime")
@@ -180,6 +180,8 @@ const breakToken = () => {
   localStorage.setItem("token", "invalid")
   window.location.reload()
 }
+*/}
+
 
 
   if (unauthorized) {
@@ -247,6 +249,7 @@ if (loading) {
         </h1>
         </div>
         <div className="space-x-10 flex-col">
+          {/*
           <button
           onClick={breakToken}
           className="p-2 rounded-lg text-sm"
@@ -258,7 +261,7 @@ if (loading) {
           className="p-2 rounded-lg text-sm"
         >
           Out
-        </button>
+        </button>*/}
           <button
           onClick={() => setListView(!listView)}
           className="p-2 rounded-lg"
