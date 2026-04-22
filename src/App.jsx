@@ -108,7 +108,14 @@ useEffect(() => {
   return () => clearTimeout(timer)
 }, [tapCount])
 
+useEffect(() => {
+  const saved = localStorage.getItem("debugMode")
+  if (saved === "true") setDebugMode(true)
+}, [])
 
+useEffect(() => {
+  localStorage.setItem("debugMode", debugMode)
+}, [debugMode])
 
   useEffect(() => {
 
