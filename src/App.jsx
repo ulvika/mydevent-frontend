@@ -22,11 +22,22 @@ export default function App() {
   const [pullStart, setPullStart] = useState(null)
   const [pullDistance, setPullDistance] = useState(0)
 
+  async function getTokenWithRetry(retries = 5) {
+  for (let i = 0; i < retries; i++) {
+    const token = localStorage.getItem("token")
+    if (token) return token
+
+    await new Promise(r => setTimeout(r, 50))
+  }
+
+  return null
+}
+
 const fetchEvents = async () => {
   setLoading(true)
 
   try {
-    const token = localStorage.getItem("token")
+    const token = await getTokenWithRetry()
 
     if (!token) {
       setUnauthorized(true)
@@ -91,7 +102,11 @@ const fetchEvents = async () => {
   if (token) {
     localStorage.setItem("token", token)
     
-    window.location.replace(window.location.pathname)
+    // 🔥 CRITICAL: delay + hard reload
+  setTimeout(() => {
+    window.location.href = window.location.pathname
+  }, 50)
+
     return
   }
 
