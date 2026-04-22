@@ -33,6 +33,8 @@ export default function App() {
   return null
 }
 
+
+
 const fetchEvents = async () => {
   setLoading(true)
 
@@ -166,6 +168,19 @@ const handleTouchEnd = async () => {
   setPullDistance(0)
 }
 
+const handleLogout = () => {
+  localStorage.removeItem("token")
+  localStorage.removeItem("eventsCache")
+  localStorage.removeItem("eventsCacheTime")
+
+  window.location.reload()
+}
+
+const breakToken = () => {
+  localStorage.setItem("token", "invalid")
+  window.location.reload()
+}
+
 
   if (unauthorized) {
     return (
@@ -232,6 +247,18 @@ if (loading) {
         </h1>
         </div>
         <div className="space-x-10 flex-col">
+          <button
+          onClick={breakToken}
+          className="p-2 rounded-lg text-sm"
+        >
+          Br
+        </button>
+        <button
+          onClick={handleLogout}
+          className="p-2 rounded-lg text-sm"
+        >
+          Out
+        </button>
           <button
           onClick={() => setListView(!listView)}
           className="p-2 rounded-lg"
