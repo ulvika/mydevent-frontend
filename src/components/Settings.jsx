@@ -48,15 +48,24 @@ export default function Settings({ onBack }) {
 
   // 🎯 Delete dog (FIXED: uses dog_id)
   const deleteDog = async (dogId) => {
-    await fetch(`${import.meta.env.VITE_API_URL}/dogs/${dogId}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: "Bearer " + token
-      }
-    })
+  // optimistic UI
+  setDogs(prev => prev.filter(d => d.dog_id !== dogId))
 
-    fetchDogs()
+  try {
+    await fetch(
+      `${import.meta.env.VITE_API_URL}/dogs/${encodeURIComponent(dogId)}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: "Bearer " + token
+        }
+      }
+    )
+  } catch (err) {
+    console.error(err)
+    fetchDogs() // fallback
   }
+}
 
   return (
     <div className="p-4 space-y-4">
