@@ -21,7 +21,16 @@ import {
 
 
 
-export default function EventCard({ event, onRefresh, listView }) {
+
+
+export default function EventCard({ event, onRefresh, listView, expandedEventId, setExpandedEventId  }) {
+
+  const isExpanded = expandedEventId === event.id
+
+const toggleExpanded = (id) => {
+  setExpandedEventId(prev => prev === id ? null : id)
+}
+
   const now = new Date()
   const sellDate = new Date(event.start_sell)
 
@@ -192,7 +201,7 @@ export default function EventCard({ event, onRefresh, listView }) {
       ) : (
         <TrophyIcon className="w-7 h-7 mt-2 text-yellow-500 flex-shrink-0" />
       )}
-
+      <div onClick={toggleExpanded}>
       <h2 className="mt-2 font-semibold text-lg truncate">
         {event.name}
         {event.isNew && (
@@ -201,7 +210,7 @@ export default function EventCard({ event, onRefresh, listView }) {
         </span>
       )}
         </h2>
-
+        </div>
     </div>
 
 
@@ -310,6 +319,10 @@ export default function EventCard({ event, onRefresh, listView }) {
       )}
 
       
+        {/* Expand button */}
+        <button onClick={() => onToggle(event.id)}>
+          {isExpanded ? "▲" : "▼"}
+        </button>
 
       </div>
     )}
@@ -325,7 +338,7 @@ export default function EventCard({ event, onRefresh, listView }) {
         </span>
         </div>
       )}
-    {/* Action Buttons */}
+    {/* Status Labels */}
     {event.status === "PÅMELDT" && (
     <div className="pt-2">
       <span className="inline-block px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800">
@@ -353,8 +366,13 @@ export default function EventCard({ event, onRefresh, listView }) {
         </button>
       </div>
     )}
+    
+    
 
-
+      {/* Expanded content */}
+      {isExpanded && (
+        <ExpandedEventContent event={event} />
+      )}
     </div>
   )
 }

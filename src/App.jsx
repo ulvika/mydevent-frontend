@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import EventCard from "./components/EventCard"
+import Settings from  "./components/Settings.jsx"
 
 import {
   StarIcon,
@@ -7,7 +8,8 @@ import {
   ClockIcon,
   ShoppingCartIcon,
   ListBulletIcon,
-  Squares2X2Icon
+  Squares2X2Icon,
+  Cog8ToothIcon
 } from "@heroicons/react/24/outline"
 
 const APP_VERSION = "1.0.2"
@@ -25,6 +27,10 @@ export default function App() {
   const [pullDistance, setPullDistance] = useState(0)
   const [debugMode, setDebugMode] = useState(false)
   const [tapCount, setTapCount] = useState(0) 
+  const [expandedEventId, setExpandedEventId] = useState(null)
+  const [page, setPage] = useState("events")
+  
+  
 
   async function getTokenWithRetry(retries = 5) {
   for (let i = 0; i < retries; i++) {
@@ -36,7 +42,6 @@ export default function App() {
 
   return null
 }
-
 
 
 const fetchEvents = async () => {
@@ -277,44 +282,50 @@ if (loading) {
       <div className="max-w-md mx-auto px-4 py-6 space-y-4">
         <div className="gap-2  space-y-1">
           <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-2 mb-0">
-            <img
-              src="/icons/mydevent-192.png"
-              alt="MyDevent"
-              className="w-12 h-12"
-              onClick={handleLogoTap}
-            />
-        <h1 className="text-xl font-semibold">
-          My Devent
-        </h1>
-        </div>
-        <div className="space-x-10 flex-col">
-          {debugMode && (
-            <div className="space-y-2">
-              <button onClick={handleLogout}>
-                Logout
-              </button>
+            <div className="space-x-10 flex-col">
+              {debugMode && (
+                <div className="space-y-2">
+                  <button onClick={handleLogout}>
+                    Logout
+                  </button>
 
-              <button onClick={breakToken}>
-                Break token
-              </button>
+                  <button onClick={breakToken}>
+                    Break token
+                  </button>
 
-              <button onClick={disableDebug}>
-                Disable debug
+                  <button onClick={disableDebug}>
+                    Disable debug
+                  </button>
+                </div>
+              )}
+              <button
+              onClick={() => setListView(!listView)}
+              className="p-2 rounded-lg"
+              >
+              {listView
+                ? <ListBulletIcon className="w-6 h-6"/>
+                : <Squares2X2Icon className="w-6 h-6"/>
+              }
               </button>
             </div>
-          )}
-          <button
-          onClick={() => setListView(!listView)}
-          className="p-2 rounded-lg"
-        >
-          {listView
-            ? <ListBulletIcon className="w-6 h-6"/>
-            : <Squares2X2Icon className="w-6 h-6"/>
-          }
-        </button>
+            <div className="flex items-center gap-2 mb-0">
+              <img
+                src="/icons/mydevent-192.png"
+                alt="MyDevent"
+                className="w-12 h-12"
+                onClick={handleLogoTap}
+              />
+              <h1 className="text-xl font-semibold">
+                My Devent
+              </h1>
+            </div>
+            <div className="space-x-10 flex-col">
+              <button onClick={() => setPage("settings")}>
+                <Cog8ToothIcon className="w-6 h-6"/>
+              </button>
+            </div>
         </div>
-      </div>
+    
 
       <div className="flex gap-x-0.5 overflow-x-auto pb-1 mb-0">
 
@@ -383,25 +394,32 @@ if (loading) {
     </div>
   )}
 
-  <div className="space-y-3">
-    {filteredEvents.map(event => (
-      <EventCard
-        key={event.id}
-        event={event}
-        onRefresh={fetchEvents}
-        listView={listView}
-      />
-    ))}
+  <div className={page === "events" ? "block" : "hidden"}>
+    <div className="space-y-3">
+      {filteredEvents.map(event => (
+        <EventCard
+          key={event.id}
+          event={event}
+          onRefresh={fetchEvents}
+          listView={listView}
+          expandedEventId={expandedEventId}
+          setExpandedEventId={setExpandedEventId}
+        />
+      ))}
+    </div>
   </div>
 
-</div>
+  <div className={page === "settings" ? "block" : "hidden"}>
+    <Settings onBack={() => setPage("events")} />
+  </div>
+
+
+      </div>
+
   
       </div>
 
     </div>
   )
-
-  
-
 }
 
