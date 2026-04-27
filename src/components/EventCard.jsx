@@ -181,6 +181,40 @@ const toggleExpanded = (id) => {
     await onRefresh();
   }
 
+  function DogRuns({ dogs }) {
+  return (
+    <div className="space-y-3">
+      {dogs.map(dog => (
+        <div key={dog.dogId}>
+          {/* Dog header */}
+          <div className="flex justify-between items-center">
+            <div className="font-medium">
+              🐶 {dog.dogName}
+            </div>
+
+            <div className="text-xs text-gray-500">
+              {dog.runCount} løp
+            </div>
+          </div>
+
+          {/* Runs */}
+          <div className="mt-1 space-y-1">
+            {dog.runs.map((run, i) => (
+              <div
+                key={i}
+                className="flex justify-between text-sm text-gray-700"
+              >
+                <span>{run.startTime || "--:--"}</span>
+                <span>{run.class}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
+
   function ExpandedEventContent({ event }) {
   const [runs, setRuns] = useState(null)
 
