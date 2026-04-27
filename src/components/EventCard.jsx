@@ -86,9 +86,6 @@ const toggleExpanded = (id) => {
   }
 
 
-
-  
-
   if (remaining <= 10) progressColor = "text-red-600"
   else if (remaining <= 30) progressColor = "text-yellow-600"
 
@@ -183,7 +180,35 @@ const toggleExpanded = (id) => {
     await onRefresh();
   }
 
-  
+  function ExpandedEventContent({ event }) {
+  const [runs, setRuns] = useState(null)
+
+  useEffect(() => {
+    fetchRuns()
+  }, [])
+
+  const fetchRuns = async () => {
+    const token = localStorage.getItem("token")
+
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL}/events/${event.id}/my-runs`,
+      {
+        headers: {
+          Authorization: "Bearer " + token
+        }
+      }
+    )
+
+    const data = await res.json()
+    setRuns(data.dogs)
+  }
+
+  if (!runs) {
+    return <div className="text-sm text-gray-400">Loading...</div>
+  }
+
+  return <DogRuns dogs={runs} />
+}
   
 
   return (
@@ -319,14 +344,15 @@ const toggleExpanded = (id) => {
       )}
 
       
-        {/* Expand button */}
-        <button onClick={() => onToggle(event.id)}>
-          {isExpanded ? "▲" : "▼"}
-        </button>
+        
 
       </div>
     )}
 
+    {/* Expand button */}
+        <button onClick={() => toggleExpanded(event.id)}>
+          {isExpanded ? "▲" : "▼"}
+        </button>
 
     {event.status === "BOOKED" && (
       <div className="pt-2">
