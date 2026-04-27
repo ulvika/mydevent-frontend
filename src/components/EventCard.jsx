@@ -1,4 +1,5 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
+
 import AvailabilityRing from "./AvailabilityRing"
 
 import {
@@ -349,11 +350,6 @@ const toggleExpanded = (id) => {
       </div>
     )}
 
-    {/* Expand button */}
-        <button onClick={() => toggleExpanded(event.id)}>
-          {isExpanded ? "▲" : "▼"}
-        </button>
-
     {event.status === "BOOKED" && (
       <div className="pt-2">
         <span className="inline-block px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800">
@@ -393,7 +389,10 @@ const toggleExpanded = (id) => {
       </div>
     )}
     
-    
+    {/* Expand button */}
+        <button onClick={() => toggleExpanded(event.id)}>
+          {isExpanded ? "▲" : "▼"}
+        </button>
 
       {/* Expanded content */}
       {isExpanded && (
